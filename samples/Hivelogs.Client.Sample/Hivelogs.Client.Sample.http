@@ -1,0 +1,6 @@
+@Hivelogs.Client.Sample_HostAddress = http://localhost:5137
+
+GET {{Hivelogs.Client.Sample_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
