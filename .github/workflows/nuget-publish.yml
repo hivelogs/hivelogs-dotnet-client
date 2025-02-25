@@ -25,15 +25,21 @@ jobs:
 
       - name: Get version using GitTools
         id: gitversion
-        uses: GitTools/actions@v3.1.11
+        uses: gittools/actions/gitversion/setup@v3.1.11
+        with:
+            versionSpec: '6.0.x'
+
+      - name: Determine Version
+        id: version_step
+        uses: gittools/actions/gitversion/execute@v3.1.11
 
       - name: Adjust version suffix for stage branch
         id: adjust_version
         run: |
           if [ "${{ github.ref }}" == "refs/heads/stage" ]; then
-            VERSION="${{ steps.gitversion.outputs.FullSemVer }}-preview"
+            VERSION="${{ steps.version_step.outputs.FullSemVer }}-preview"
           else
-            VERSION="${{ steps.gitversion.outputs.FullSemVer }}"
+            VERSION="${{ steps.version_step.outputs.FullSemVer }}"
           fi
           echo "Version: $VERSION"
           echo "::set-output name=version::$VERSION"
