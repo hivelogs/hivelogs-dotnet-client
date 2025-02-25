@@ -1,12 +1,35 @@
+using Hivelogs.Client.Configuration;
+using Hivelogs.Client.Extensions;
+using Hivelogs.Client.Sample.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
+var hivelogsOptions = builder.Configuration.GetSection("HivelogsClient").Get<HivelogsClientOptions>()
+                      ?? new HivelogsClientOptions
+                      {
+                          ApiUrl = "https://localhost:8081",
+                          ApplicationEnvironmentId = Guid.Parse("9701fbb9-5ffa-45a6-b196-54f2591124d7"),
+                          UseBatchLogging = true
+                      };
+
+builder.Services.AddHivelogs(hivelogsOptions!);
+
 builder.Services.AddOpenApi();
+
+builder.Services.AddScoped<ITestService, TestService>();
+
+builder.Services.AddControllers();
+
+builder.Logging.ClearProviders();
+builder.Logging.AddConsole();
+builder.Logging.AddHivelogsLogger();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+app.UseHivelogs();
+
+app.MapControllers();
+
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
@@ -14,28 +37,4 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-var summaries = new[]
-{
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
-
-app.MapGet("/weatherforecast", () =>
-{
-    var forecast =  Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
-})
-.WithName("GetWeatherForecast");
-
 app.Run();
-
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}

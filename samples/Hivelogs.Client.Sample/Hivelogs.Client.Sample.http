@@ -1,6 +1,21 @@
 @Hivelogs.Client.Sample_HostAddress = http://localhost:5137
 
-GET {{Hivelogs.Client.Sample_HostAddress}}/weatherforecast/
+### Endpoint de Teste (GET /test)
+GET {{Hivelogs.Client.Sample_HostAddress}}/test
 Accept: application/json
 
-###
+### Endpoint de Create (POST /create)
+POST {{Hivelogs.Client.Sample_HostAddress}}/create
+Content-Type: application/json
+
+{
+    "nome": "Exemplo",
+    "descricao": "Simulação de criação de recurso"
+}
+
+### Endpoint para Simular Exceção (GET /exception)
+GET {{Hivelogs.Client.Sample_HostAddress}}/exception
+
+### Endpoint para Simular Log de Service (GET /service)
+GET {{Hivelogs.Client.Sample_HostAddress}}/service
+Accept: application/json
