@@ -23,7 +23,7 @@ jobs:
 
       - name: Get version using GitTools
         id: gitversion
-        uses: GitTools/actions@v3.1.11
+        uses: GitTools/actions/gitversion/execute@v3.1.11
 
       - name: Adjust version suffix for stage branch
         id: adjust_version
