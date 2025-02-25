@@ -1,0 +1,49 @@
+name: Build and Publish NuGet Package
+
+on:
+  push:
+    branches:
+      - main
+      - stage
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4.2.2
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '9.0.x'
+
+      - name: Restore dependencies
+        run: dotnet restore
+
+      - name: Get version using GitTools
+        id: gitversion
+        uses: GitTools/actions@v3.1.11
+
+      - name: Adjust version suffix for stage branch
+        id: adjust_version
+        run: |
+          if [ "${{ github.ref }}" == "refs/heads/stage" ]; then
+            VERSION="${{ steps.gitversion.outputs.FullSemVer }}-preview"
+          else
+            VERSION="${{ steps.gitversion.outputs.FullSemVer }}"
+          fi
+          echo "Version: $VERSION"
+          echo "::set-output name=version::$VERSION"
+
+      - name: Build project
+        run: dotnet build --configuration Release --no-restore
+
+      - name: Pack NuGet Package
+        run: |
+          dotnet pack --configuration Release --no-build -o ./artifacts /p:PackageVersion=${{ steps.adjust_version.outputs.version }}
+      
+      - name: Publish NuGet Package
+        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/stage'
+        run: |
+          dotnet nuget push ./artifacts/*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
