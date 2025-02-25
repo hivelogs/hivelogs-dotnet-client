@@ -47,9 +47,15 @@ jobs:
       - name: Build project
         run: dotnet build --configuration Release --no-restore
 
+      - name: Create artifacts directory
+        run: mkdir -p ./artifacts
+
       - name: Pack NuGet Package
         run: |
           dotnet pack --configuration Release --no-build -o ./artifacts /p:PackageVersion=${{ steps.adjust_version.outputs.version }}
+      
+      - name: List artifacts folder
+        run: ls -la ./artifacts
       
       - name: Publish NuGet Package
         if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/stage'
