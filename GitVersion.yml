@@ -6,12 +6,12 @@ branches:
     increment: Minor
     is-release-branch: true
     track-merge-target: false
-    tag: ""
+    label: ""
   stage:
     regex: ^stage$
     increment: Patch
     is-release-branch: false
     track-merge-target: false
-    tag: preview
+    label: preview
 ignore:
   sha: []
