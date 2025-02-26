@@ -26,4 +26,10 @@
     <PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="icon_128.png" Pack="true" PackagePath="">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
