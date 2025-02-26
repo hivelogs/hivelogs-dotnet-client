@@ -42,8 +42,7 @@ jobs:
 
       - name: Pack NuGet Package
         run: |
-          dotnet pack --configuration Release --no-build -o ./artifacts \
-          /p:PackageVersion=${{ steps.gitversion.outputs.nuGetVersionV2 }}
+          dotnet pack --configuration Release --no-build -o ./artifacts /p:PackageVersion=${{ steps.gitversion.outputs.fullSemVer }}
 
       - name: List artifacts folder
         run: ls -la ./artifacts
