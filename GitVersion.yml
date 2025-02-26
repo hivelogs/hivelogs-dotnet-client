@@ -1,13 +1,13 @@
-mode: Mainline
 branches:
   main:
     regex: ^main$
-    label: '' 
+    label: ""
     increment: Minor
     track-merge-target: false
+    is-mainline: true
   stage:
     regex: ^stage$
-    label: preview 
+    label: preview
     increment: Patch
     track-merge-target: false
 ignore:
