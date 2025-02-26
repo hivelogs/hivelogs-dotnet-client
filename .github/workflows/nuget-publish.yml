@@ -1,0 +1,53 @@
+name: Build and Publish NuGet Package
+
+on:
+  push:
+    branches:
+      - main
+      - stage
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install GitVersion
+        uses: gittools/actions/gitversion/setup@v0.9.15
+        with:
+          versionSpec: '6.x'
+
+      - name: Determine Version
+        id: gitversion
+        uses: gittools/actions/gitversion/execute@v0.9.15
+        with:
+          useConfigFile: true
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '9.0.x'
+
+      - name: Restore dependencies
+        run: dotnet restore
+
+      - name: Build project
+        run: dotnet build --configuration Release --no-restore
+
+      - name: Create artifacts directory
+        run: mkdir -p ./artifacts
+
+      - name: Pack NuGet Package
+        run: |
+          dotnet pack --configuration Release --no-build -o ./artifacts /p:PackageVersion=${{ steps.gitversion.outputs.fullSemVer }}
+
+      - name: List artifacts folder
+        run: ls -la ./artifacts
+      
+      - name: Publish NuGet Package
+        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/stage'
+        run: |
+          dotnet nuget push ./artifacts/*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json

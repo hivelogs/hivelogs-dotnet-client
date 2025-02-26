@@ -1,0 +1,13 @@
+branches:
+  main:
+    regex: ^main$
+    label: ""
+    increment: Minor
+    track-merge-target: false
+  stage:
+    regex: ^stage$
+    label: preview
+    increment: Patch
+    track-merge-target: false
+ignore:
+  sha: []
