@@ -27,7 +27,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="icon_128.png" Pack="true" PackagePath="\">
+    <None Update="icon_128.png" Pack="true" PackagePath="">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
 	<None Include="../../README.md" Pack="true" PackagePath="\"/>
