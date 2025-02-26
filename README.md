@@ -1,7 +1,7 @@
 # Hivelogs.Client (DotNet)
 
-[![NuGet](https://img.shields.io/nuget/v/MyHivelogsClient.svg)](https://www.nuget.org/packages/Hivelogs.Client/)
-[![Build](https://github.com/hivelogs/hivelogs-dotnet-client/blob/stage/.github/workflows/nuget-publish.yml/badge.svg)](https://github.com/hivelogs/hivelogs-dotnet-client/actions)
+![NuGet Downloads](https://img.shields.io/nuget/dt/Hivelogs.Client)
+![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/hivelogs/hivelogs-dotnet-client/nuget-publish.yml)
 
 ## Overview
 
