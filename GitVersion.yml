@@ -2,13 +2,13 @@ mode: Mainline
 branches:
   main:
     regex: ^main$
-    tag: ''
+    label: ''
     increment: Minor
     prevent-increment-of-merged-branch-version: true
     track-merge-target: false
   stage:
     regex: ^stage$
-    tag: preview
+    label: preview
     increment: Patch
     prevent-increment-of-merged-branch-version: true
     track-merge-target: false
