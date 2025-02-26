@@ -1,13 +1,17 @@
+next-version: 0.1.0
+mode: ContinuousDeployment
 branches:
   main:
     regex: ^main$
-    label: ""
     increment: Minor
+    is-release-branch: true
     track-merge-target: false
+    tag: ""
   stage:
     regex: ^stage$
-    label: preview
     increment: Patch
+    is-release-branch: false
     track-merge-target: false
+    tag: preview
 ignore:
   sha: []
