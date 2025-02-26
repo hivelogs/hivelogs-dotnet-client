@@ -4,7 +4,6 @@ branches:
     label: ""
     increment: Minor
     track-merge-target: false
-    is-mainline: true
   stage:
     regex: ^stage$
     label: preview
