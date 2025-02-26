@@ -1,5 +1,6 @@
 # Hivelogs.Client (DotNet)
 
+![Endpoint Badge](https://img.shields.io/endpoint?url=https%3A%2F%2Fwww.nuget.org%2Fpackages%2FHivelogs.Client&label=Nuget)
 ![NuGet Downloads](https://img.shields.io/nuget/dt/Hivelogs.Client)
 ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/hivelogs/hivelogs-dotnet-client/nuget-publish.yml)
 
